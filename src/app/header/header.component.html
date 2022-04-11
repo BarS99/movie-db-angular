@@ -1,0 +1,18 @@
+<header class="header bg-dark text-white py-3">
+    <div class="container d-flex align-items-center">
+        <div class="d-flex align-items-center fw-bold">
+            <fa-icon icon="video" class="me-2"></fa-icon>
+            Movie db
+        </div>
+        <nav class="header__nav ms-auto">
+            <ul class="d-flex px-4 m-0 gap-4">
+                <li class="header__nav-item d-block" *ngFor="let item of menu;">
+                    <a class="header__nav-link d-block fw-bold" routerLink="{{item.path}}" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
+                        {{item.name}}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

@@ -1,0 +1,21 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+
+.header {
+    &__nav-link {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.4s;
+
+        &.active {
+            text-decoration: underline;
+        }
+
+        @include media-breakpoint-up(lg) {
+            &:hover {
+                color: $danger;
+            }
+        }
+    }
+}
