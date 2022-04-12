@@ -31,16 +31,16 @@ export class IndexComponent implements OnInit {
     },
     complete: () => {
       this.loading = false;
+      this.page = this.page + 1;
     }
   }
 
   ngOnInit(): void {
-    this.indexService.getMovies().subscribe(this.moviesObserverActions)
+    this.indexService.getMovies().subscribe(this.moviesObserverActions);
   }
 
   fetchMovies(page: number): void {
     this.loading = true;
-    this.page = this.page + 1;
     if (this.page > this.maxPage) return;
 
     this.indexService.getMovies(page).subscribe(this.moviesObserverActions)
