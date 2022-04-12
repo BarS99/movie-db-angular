@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IndexService } from './index.service';
-import { MovieInterface } from './index.model';
+import { MovieInterface, MovieHttpInterface } from './index.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-index',
@@ -10,14 +11,23 @@ import { MovieInterface } from './index.model';
 export class IndexComponent implements OnInit {
   private title: string = "Trending now";
   private movies: MovieInterface[] = [];
+  private page: number = 1;
+  private maxPage: number = -1;
 
-  constructor(public indexService: IndexService) {
+  constructor(public indexService: IndexService) {}
+
+  private moviesObserverActions = {
+    next: (response: MovieHttpInterface) => {
+      this.movies = [...this.movies, ...response.results];
+      if (this.maxPage < 1) {
+        this.maxPage = response.total_pages;
+      }
+    },
+    error: () => this.movies = []
   }
 
   ngOnInit(): void {
-    this.indexService.Movies.subscribe(response => {
-      this.movies = <MovieInterface[]>response;
-    })
+    this.indexService.getMovies().subscribe(this.moviesObserverActions)
   }
 
   get Title(): string {
@@ -26,5 +36,16 @@ export class IndexComponent implements OnInit {
 
   get Movies(): MovieInterface[] {
     return this.movies;
+  }
+
+  get Page(): number {
+    return this.page;
+  }
+
+  fetchMovies(page: number): void {
+    this.page = this.page + 1;
+    if (this.page > this.maxPage) return;
+
+    this.indexService.getMovies(page).subscribe(this.moviesObserverActions)
   }
 }

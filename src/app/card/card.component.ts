@@ -17,7 +17,7 @@ export class CardComponent implements OnInit {
   }
 
   get Path() {
-    return `${location.host}/movie/${this.data.id}`;
+    return `/movie/${this.data.id}`;
   }
 
   get PosterPath() {
