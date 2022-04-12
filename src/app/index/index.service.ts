@@ -9,11 +9,8 @@ import { MovieHttpInterface } from '../card/card.model';
   providedIn: 'root'
 })
 export class IndexService {
-  private api: ApiInterface;
 
-  constructor(private http: HttpClient, appService: AppService) {
-    this.api = appService.Api;
-  }
+  constructor(private http: HttpClient, private appService: AppService) {}
 
   getMovies(page: number = 1): Observable<MovieHttpInterface> {
     const params = new URLSearchParams();
@@ -23,7 +20,7 @@ export class IndexService {
     const paramsString = params.toString();
 
     const movies = this.http.get<MovieHttpInterface>
-    (`${this.api.url}/3/movie/popular?api_key=${this.api.key}&${paramsString}`).pipe(delay(300));
+    (`${this.appService.api.url}/3/movie/popular?api_key=${this.appService.api.key}&${paramsString}`).pipe(delay(300));
 
     return movies;
   }

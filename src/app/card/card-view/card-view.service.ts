@@ -9,15 +9,12 @@ import { MovieViewInterface } from '../card.model';
   providedIn: 'root'
 })
 export class CardViewService {
-  private api: ApiInterface;
 
-  constructor(private http: HttpClient, private appService: AppService) {
-    this.api = appService.Api;
-  }
+  constructor(private http: HttpClient, private appService: AppService) {}
 
   getMovie(id: number): Observable<MovieViewInterface> {
     return this.http.get<MovieViewInterface>
-    (`${this.api.url}/3/movie/${id}?api_key=${this.api.key}`).pipe(delay(300), tap((result) => {
+    (`${this.appService.api.url}/3/movie/${id}?api_key=${this.appService.api.key}`).pipe(delay(300), tap((result) => {
       console.log(result);
     }));
   }

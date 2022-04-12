@@ -1,23 +1,23 @@
 <section class="container">
     <h1 class="h2 mb-4">
-        {{Title}}
+        {{title}}
     </h1>
 
-    <div *ngIf="AlertMessage">
+    <div *ngIf="alertMessage">
         <ngb-alert type="info" [dismissible]="false">
-            {{AlertMessage}}
+            {{alertMessage}}
         </ngb-alert>
     </div>
 
-    <div class="row" *ngIf="Movies.length">
-        <app-card class="col-6 col-sm-6 col-md-4 col-lg-3 pb-4 d-flex" *ngFor="let movie of Movies" [data]="movie"></app-card>
+    <div class="row" *ngIf="movies.length">
+        <app-card class="col-6 col-sm-6 col-md-4 col-lg-3 pb-4 d-flex" *ngFor="let movie of movies" [data]="movie"></app-card>
     </div>
 
-    <div *ngIf="!Loading && !AlertMessage" class="text-center py-2">
-        <button class="btn btn-secondary" (click)="fetchMovies(Page)">
+    <div *ngIf="!loading && !alertMessage" class="text-center py-2">
+        <button class="btn btn-secondary" (click)="fetchMovies(page)">
             Load more
         </button>
     </div>
 
-    <app-loader *ngIf="Loading"></app-loader>
+    <app-loader *ngIf="loading"></app-loader>
 </section>

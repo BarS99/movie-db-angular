@@ -8,12 +8,12 @@ import { MovieInterface, MovieHttpInterface } from '../card/card.model';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  private title: string = "Trending now";
-  private movies: MovieInterface[] = [];
-  private page: number = 1;
+  title: string = "Trending now";
+  movies: MovieInterface[] = [];
+  page: number = 1;
   private maxPage: number = -1;
-  private alertMessage: string|boolean = "";
-  private loading: boolean = true;
+  alertMessage: string|boolean = "";
+  loading: boolean = true;
 
   constructor(private indexService: IndexService) {}
 
@@ -36,26 +36,6 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.indexService.getMovies().subscribe(this.moviesObserverActions)
-  }
-
-  get Title(): string {
-    return this.title;
-  }
-
-  get Movies(): MovieInterface[] {
-    return this.movies;
-  }
-
-  get Page(): number {
-    return this.page;
-  }
-
-  get AlertMessage(): string|boolean {
-    return this.alertMessage;
-  }
-  
-  get Loading(): boolean {
-    return this.loading;
   }
 
   fetchMovies(page: number): void {

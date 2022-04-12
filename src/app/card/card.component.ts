@@ -21,6 +21,6 @@ export class CardComponent implements OnInit {
   }
 
   get PosterPath() {
-    return `${this.appService.Api.poster}${this.data.poster_path}`;
+    return `${this.appService.api.poster}${this.data.poster_path}`;
   }
 }
