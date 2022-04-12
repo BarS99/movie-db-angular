@@ -2,12 +2,16 @@
     <h1 class="h2 mb-4">
         {{Title}}
     </h1>
+
     <div class="row" *ngIf="Movies.length">
         <app-card class="col-6 col-sm-6 col-md-4 col-lg-3 pb-4 d-flex" *ngFor="let movie of Movies" [data]="movie"></app-card>
     </div>
-    <div class="text-center py-2">
+
+    <div *ngIf="!Loading" class="text-center py-2">
         <button class="btn btn-secondary" (click)="fetchMovies(Page)">
             Load more
         </button>
     </div>
+
+    <app-loader *ngIf="Loading"></app-loader>
 </section>

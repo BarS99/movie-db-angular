@@ -23,7 +23,7 @@ export class IndexService {
     const paramsString = params.toString();
 
     const movies = this.http.get<MovieHttpInterface>
-    (`${this.api.url}/3/movie/popular?api_key=${this.api.key}&${paramsString}`);
+    (`${this.api.url}/3/movie/popular?api_key=${this.api.key}&${paramsString}`).pipe(delay(1000));
 
     return movies;
   }

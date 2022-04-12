@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IndexService } from './index.service';
 import { MovieInterface, MovieHttpInterface } from './index.model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-index',
@@ -13,6 +12,7 @@ export class IndexComponent implements OnInit {
   private movies: MovieInterface[] = [];
   private page: number = 1;
   private maxPage: number = -1;
+  private loading: boolean = true;
 
   constructor(public indexService: IndexService) {}
 
@@ -22,6 +22,7 @@ export class IndexComponent implements OnInit {
       if (this.maxPage < 1) {
         this.maxPage = response.total_pages;
       }
+      this.loading = false;
     },
     error: () => this.movies = []
   }
@@ -41,8 +42,13 @@ export class IndexComponent implements OnInit {
   get Page(): number {
     return this.page;
   }
+  
+  get Loading(): boolean {
+    return this.loading;
+  }
 
   fetchMovies(page: number): void {
+    this.loading = true;
     this.page = this.page + 1;
     if (this.page > this.maxPage) return;
 
