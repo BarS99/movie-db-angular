@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, pipe, delay, tap } from 'rxjs';
-import { ApiInterface } from 'src/app/app.model';
+import { Observable, delay, tap } from 'rxjs';
 import { AppService } from 'src/app/app.service';
 import { MovieViewInterface } from '../card.model';
 
@@ -9,7 +8,6 @@ import { MovieViewInterface } from '../card.model';
   providedIn: 'root'
 })
 export class CardViewService {
-
   constructor(private http: HttpClient, private appService: AppService) {}
 
   getMovie(id: number): Observable<MovieViewInterface> {

@@ -1,9 +1,11 @@
-<div *ngIf="movie !== null" class="container">
+<div *ngIf="movie !== null" class="container card-view">
     <div class="row">
-        <div class="col-sm-6 mb-4">
-            <img src={{PosterPath}} [alt]="'Poster of ' + movie.title" class="img-fluid">
+        <div class="col-lg-6 mb-4">
+            <div class="card-view__image">
+                <img src={{PosterPath}} [alt]="'Poster of ' + movie.title" class="img-fluid">
+            </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-lg-6">
             <div class="row gap-4">
                 <div>
                     <time class="d-block mb-2" [attr.datetime]="getDateToIso(movie.release_date)">
@@ -14,9 +16,25 @@
                         {{movie.title}}
                     </h1>
                 </div>
-                <p class="lh-base">
-                    {{movie.overview}}
-                </p>
+                <div>
+                    <app-rating [rating]="movie.vote_average"></app-rating>
+                    <p class="lh-base fs-5">
+                        {{movie.overview}}
+                    </p>
+                    <table *ngIf="DetailsList.length" class="table table-light table-striped card-view__details mt-4">
+                        <tbody>
+                            <tr *ngFor="let item of DetailsList">
+                                <th class="card-view__details-field">
+                                    <fa-icon [icon]="item.icon" class="card-view__details-icon"></fa-icon>
+                                    {{item.field}}
+                                </th>
+                                <td class="card-view__details-value">
+                                    {{item.value}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

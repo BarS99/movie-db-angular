@@ -1,0 +1,23 @@
+.card-view {
+    &__image {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    &__details-field {
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    &__details-value {
+        word-break: break-word;
+      }
+
+    &__details-icon {
+        width: 2.5rem;
+        display: inline-flex;
+        justify-content: center;
+    }
+}

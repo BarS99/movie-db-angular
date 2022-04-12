@@ -15,6 +15,7 @@ import { CardComponent } from './card/card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 import { CardViewComponent } from './card/card-view/card-view.component';
+import { RatingComponent } from './card/card-view/rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CardViewComponent } from './card/card-view/card-view.component';
     FooterComponent,
     CardComponent,
     LoaderComponent,
-    CardViewComponent
+    CardViewComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,

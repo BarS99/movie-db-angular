@@ -1,0 +1,8 @@
+.progress {
+    height: 2rem;
+    text-shadow: 2px 2px 2px hsla(0, 0%, 0%, 0.4);
+
+    &-bar {
+        height: inherit;
+    }
+}
