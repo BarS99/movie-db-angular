@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IndexService } from './index.service';
-import { MovieInterface, MovieHttpInterface } from './index.model';
+import { MovieInterface, MovieHttpInterface } from '../card/card.model';
 
 @Component({
   selector: 'app-index',
@@ -12,9 +12,10 @@ export class IndexComponent implements OnInit {
   private movies: MovieInterface[] = [];
   private page: number = 1;
   private maxPage: number = -1;
+  private alertMessage: string|boolean = "";
   private loading: boolean = true;
 
-  constructor(public indexService: IndexService) {}
+  constructor(private indexService: IndexService) {}
 
   private moviesObserverActions = {
     next: (response: MovieHttpInterface) => {
@@ -22,9 +23,15 @@ export class IndexComponent implements OnInit {
       if (this.maxPage < 1) {
         this.maxPage = response.total_pages;
       }
-      this.loading = false;
     },
-    error: () => this.movies = []
+    error: () => {
+      this.movies = []
+      this.loading = false;
+      this.alertMessage = "Failed to fetch the movies!";
+    },
+    complete: () => {
+      this.loading = false;
+    }
   }
 
   ngOnInit(): void {
@@ -41,6 +48,10 @@ export class IndexComponent implements OnInit {
 
   get Page(): number {
     return this.page;
+  }
+
+  get AlertMessage(): string|boolean {
+    return this.alertMessage;
   }
   
   get Loading(): boolean {

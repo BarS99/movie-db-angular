@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiInterface } from '../app.model';
 import { AppService } from '../app.service';
 import { delay, Observable } from 'rxjs';
-import { MovieHttpInterface } from './index.model';
+import { MovieHttpInterface } from '../card/card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class IndexService {
     const paramsString = params.toString();
 
     const movies = this.http.get<MovieHttpInterface>
-    (`${this.api.url}/3/movie/popular?api_key=${this.api.key}&${paramsString}`).pipe(delay(1000));
+    (`${this.api.url}/3/movie/popular?api_key=${this.api.key}&${paramsString}`).pipe(delay(300));
 
     return movies;
   }

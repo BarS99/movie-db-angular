@@ -1,0 +1,37 @@
+<div *ngIf="Movie !== null" class="container">
+    <div class="row">
+        <div class="col-sm-6 mb-4">
+            <img src={{PosterPath}} [alt]="'Poster of ' + Movie.title" class="img-fluid">
+        </div>
+        <div class="col-sm-6">
+            <div class="row gap-4">
+                <div>
+                    <time class="d-block mb-2" [attr.datetime]="getDateToIso(Movie.release_date)">
+                        <fa-icon icon="calendar" class="me-2"></fa-icon>
+                        {{Movie.release_date}}
+                    </time>
+                    <h1 class="h2 fw-bold">
+                        {{Movie.title}}
+                    </h1>
+                </div>
+                <p class="lh-base">
+                    {{Movie.overview}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="AlertMessage" class="container">
+    <ngb-alert type="info" [dismissible]="false">
+        {{AlertMessage}}
+    </ngb-alert>
+</div>
+
+<app-loader *ngIf="Loading"></app-loader>
+
+<div *ngIf="!Loading && !AlertMessage" class="text-center py-2">
+    <a class="btn btn-secondary" routerLink="/">
+        Back to list
+    </a>
+</div>

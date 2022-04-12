@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CardViewComponent } from './card/card-view/card-view.component';
 import { IndexComponent } from './index/index.component';
 import { Page404Component } from './page404/page404.component';
 
 const routes: Routes = [
   {path: '', component: IndexComponent},
+  {path: 'movie/:id', component: CardViewComponent},
   {path: '**', component: Page404Component},
 ];
 

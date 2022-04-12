@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { HeaderComponent } from './header/header.component';
 import { IndexComponent } from './index/index.component';
 import { Page404Component } from './page404/page404.component';
@@ -14,6 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CardComponent } from './card/card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
+import { CardViewComponent } from './card/card-view/card-view.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LoaderComponent } from './loader/loader.component';
     Page404Component,
     FooterComponent,
     CardComponent,
-    LoaderComponent
+    LoaderComponent,
+    CardViewComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,6 @@ import { LoaderComponent } from './loader/loader.component';
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faVideo);
+    library.addIcons(faVideo, faCalendar);
   }
 }
