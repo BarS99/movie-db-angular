@@ -5,42 +5,35 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faCalendar, faVideo } from '@fortawesome/free-solid-svg-icons';
-import { HeaderComponent } from './header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IndexComponent } from './index/index.component';
 import { Page404Component } from './page404/page404.component';
-import { FooterComponent } from './footer/footer.component';
 import { CardComponent } from './card/card.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoaderComponent } from './loader/loader.component';
 import { CardViewComponent } from './card/card-view/card-view.component';
-import { RatingComponent } from './card/card-view/rating/rating.component';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     IndexComponent,
     Page404Component,
-    FooterComponent,
     CardComponent,
-    LoaderComponent,
-    CardViewComponent,
-    RatingComponent
+    CardViewComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(faVideo, faCalendar);
-  }
+  constructor() {}
 }

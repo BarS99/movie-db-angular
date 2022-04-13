@@ -12,8 +12,6 @@ export class CardViewService {
 
   getMovie(id: number): Observable<MovieViewInterface> {
     return this.http.get<MovieViewInterface>
-    (`${this.appService.api.url}/3/movie/${id}?api_key=${this.appService.api.key}`).pipe(delay(300), tap((result) => {
-      console.log(result);
-    }));
+    (`${this.appService.api.url}/3/movie/${id}?api_key=${this.appService.api.key}`).pipe(delay(300));
   }
 }
