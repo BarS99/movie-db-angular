@@ -19,8 +19,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ]
 })
 export class CardViewModule {
-  constructor() {
-    
-  }
+  constructor() {}
 }
   

@@ -6,8 +6,12 @@ import { Page404Component } from './page404/page404.component';
 const routes: Routes = [
   { path: '', component: IndexComponent },
   {
-    path: 'movie/:id', 
+    path: 'movie/:id',
     loadChildren: () => import('./card-view/card-view.module').then(m => m.CardViewModule)
+  },
+  {
+    path: 'favorite',
+    loadChildren: () => import('./favorite/favorite.module').then(m => m.FavoriteModule)
   },
   { path: '**', component: Page404Component },
 ];

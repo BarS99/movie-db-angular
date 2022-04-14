@@ -7,15 +7,25 @@
         </div>
         <div class="col-lg-6">
             <div class="row gap-4">
-                <div>
-                    <time class="d-block mb-2" [attr.datetime]="getDateToIso(movie.release_date)">
+                <div class="d-flex align-items-center mb-2 gap-4">
+                    <time class="d-block" [attr.datetime]="getDateToIso(movie.release_date)">
                         <fa-icon icon="calendar" class="me-2"></fa-icon>
                         {{movie.release_date}}
                     </time>
-                    <h1 class="h2 fw-bold">
-                        {{movie.title}}
-                    </h1>
+                    <button class="btn btn-sm" [ngClass]="isFavorite ? 'btn-danger' : 'btn-success'" (click)='toggleFavorite()'>
+                        <div *ngIf="!isFavorite; else removeFavorite;">
+                            <fa-icon [icon]="starIcon" class="me-2"></fa-icon>
+                            Add to favorite
+                        </div>
+                       <ng-template #removeFavorite>
+                            <fa-icon [icon]="banIcon" class="me-2"></fa-icon>
+                            Remove from favorite
+                       </ng-template>
+                    </button>
                 </div>
+                <h1 class="h2 fw-bold">
+                    {{movie.title}}
+                </h1>
                 <div>
                     <app-rating [rating]="movie.vote_average"></app-rating>
                     <p class="lh-base fs-5">

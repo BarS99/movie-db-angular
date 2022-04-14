@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faDollar, faLink, faQuestion, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faDollar, faLink, faQuestion, faUserShield, faStar, faBan } from '@fortawesome/free-solid-svg-icons';
 import { dateToIso } from 'src/app/shared/utilities';
 import { Api } from 'src/environments/environment';
+import { FavoriteService } from '../favorite/favorite.service';
 import { MovieViewInterface } from '../shared/components/card/card.model';
 import { CardViewService } from './card-view.service';
 
@@ -21,15 +22,20 @@ interface DetailsInterface {
 export class CardViewComponent implements OnInit {
   private id: number = -1;
   movie: MovieViewInterface | null = null;
+  isFavorite: boolean = false;
   alertMessage: string | boolean = "";
   loading: boolean = true;
+  starIcon: IconDefinition = faStar;
+  banIcon: IconDefinition = faBan;
 
-  constructor(private route: ActivatedRoute, private cardViewService: CardViewService) { }
+  constructor(private route: ActivatedRoute, private cardViewService: CardViewService, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
+
+    this.isFavorite = this.favoriteService.isFavorite(this.id);
 
     this.cardViewService.getMovie(this.id).subscribe({
       next: (response) => {
@@ -44,6 +50,7 @@ export class CardViewComponent implements OnInit {
       }
     })
   }
+  
   get PosterPath(): string | null {
     return `${Api.posterLg}${this.movie?.poster_path}`;
   }
@@ -69,5 +76,13 @@ export class CardViewComponent implements OnInit {
 
   getDateToIso(date: string): string {
     return dateToIso(date);
+  }
+
+  toggleFavorite(): void {
+    if (this.isFavorite) {
+      this.isFavorite = this.favoriteService.removeFromFavorite(this.id);
+    } else {
+      this.isFavorite = this.favoriteService.addToFavorite(this.id);
+    }
   }
 }
