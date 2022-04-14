@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IndexService } from './index.service';
-import { MovieInterface, MovieHttpInterface } from '../card/card.model';
+import { MovieInterface, MovieHttpInterface } from '../shared/components/card/card.model';
 
 @Component({
   selector: 'app-index',
@@ -11,7 +11,7 @@ export class IndexComponent implements OnInit {
   title: string = "Trending now";
   movies: MovieInterface[] = [];
   page: number = 1;
-  private maxPage: number = -1;
+  maxPage: number = -1;
   alertMessage: string|boolean = "";
   loading: boolean = true;
 
@@ -21,7 +21,11 @@ export class IndexComponent implements OnInit {
     next: (response: MovieHttpInterface) => {
       this.movies = [...this.movies, ...response.results];
       if (this.maxPage < 1) {
-        this.maxPage = response.total_pages;
+        if (response.total_pages > 500) {
+          this.maxPage = 500;
+        } else {
+          this.maxPage = response.total_pages;
+        }
       }
     },
     error: () => {

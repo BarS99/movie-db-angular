@@ -8,9 +8,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IndexComponent } from './index/index.component';
 import { Page404Component } from './page404/page404.component';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from './shared/components/card/card.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CardViewComponent } from './card/card-view/card-view.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,8 +18,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     IndexComponent,
     Page404Component,
-    CardComponent,
-    CardViewComponent
+    CardComponent
   ],
   imports: [
     BrowserModule,

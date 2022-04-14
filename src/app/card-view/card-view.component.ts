@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IconDefinition, IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDollar, faLink, faQuestion, faUserShield } from '@fortawesome/free-solid-svg-icons';
-import { map } from 'rxjs';
-import { AppService } from 'src/app/app.service';
-import { MovieViewInterface } from '../card.model';
+import { dateToIso } from 'src/app/shared/utilities';
+import { Api } from 'src/environments/environment';
+import { MovieViewInterface } from '../shared/components/card/card.model';
 import { CardViewService } from './card-view.service';
 
 interface DetailsInterface {
@@ -24,7 +24,7 @@ export class CardViewComponent implements OnInit {
   alertMessage: string | boolean = "";
   loading: boolean = true;
 
-  constructor(private route: ActivatedRoute, private cardViewService: CardViewService, private appService: AppService) { }
+  constructor(private route: ActivatedRoute, private cardViewService: CardViewService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -45,7 +45,7 @@ export class CardViewComponent implements OnInit {
     })
   }
   get PosterPath(): string | null {
-    return `${this.appService.api.posterLg}${this.movie?.poster_path}`;
+    return `${Api.posterLg}${this.movie?.poster_path}`;
   }
 
   get DetailsList(): DetailsInterface[] {
@@ -68,6 +68,6 @@ export class CardViewComponent implements OnInit {
   }
 
   getDateToIso(date: string): string {
-    return this.appService.dateToIso(date);
+    return dateToIso(date);
   }
 }

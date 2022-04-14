@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiInterface } from '../app.model';
 import { AppService } from '../app.service';
 import { delay, Observable } from 'rxjs';
-import { MovieHttpInterface } from '../card/card.model';
+import { MovieHttpInterface } from '../shared/components/card/card.model';
+import { Api } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IndexService {
-
-  constructor(private http: HttpClient, private appService: AppService) {}
+  constructor(private http: HttpClient) {}
 
   getMovies(page: number = 1): Observable<MovieHttpInterface> {
     const params = new URLSearchParams();
@@ -20,7 +19,7 @@ export class IndexService {
     const paramsString = params.toString();
 
     const movies = this.http.get<MovieHttpInterface>
-    (`${this.appService.api.url}/3/movie/popular?api_key=${this.appService.api.key}&${paramsString}`).pipe(delay(300));
+    (`${Api.url}/3/movie/popular?api_key=${Api.key}&${paramsString}`).pipe(delay(300));
 
     return movies;
   }

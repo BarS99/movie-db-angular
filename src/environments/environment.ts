@@ -6,6 +6,20 @@ export const environment = {
   production: false
 };
 
+interface ApiInterface {
+  key: string,
+  url: string,
+  poster: string,
+  posterLg: string,
+}
+
+export const Api: ApiInterface = {
+  key: "e003527dc120ac9c047140a2d1870a10",
+  url: "https://api.themoviedb.org",
+  poster: "https://image.tmdb.org/t/p/w500",
+  posterLg: "https://image.tmdb.org/t/p/w780",
+};
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
