@@ -59,7 +59,7 @@
 <app-loader *ngIf="loading"></app-loader>
 
 <div *ngIf="!loading && !alertMessage" class="text-center py-2">
-    <a class="btn btn-secondary" routerLink="/">
+    <button class="btn btn-secondary" (click)="goBack()">
         Back to list
-    </a>
+    </button>
 </div>

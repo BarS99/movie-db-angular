@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -28,7 +29,7 @@ export class CardViewComponent implements OnInit {
   starIcon: IconDefinition = faStar;
   banIcon: IconDefinition = faBan;
 
-  constructor(private route: ActivatedRoute, private cardViewService: CardViewService, private favoriteService: FavoriteService) { }
+  constructor(private route: ActivatedRoute, private cardViewService: CardViewService, private favoriteService: FavoriteService, private locationService: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -84,5 +85,9 @@ export class CardViewComponent implements OnInit {
     } else {
       this.isFavorite = this.favoriteService.addToFavorite(this.id);
     }
+  }
+
+  goBack(): void {
+    this.locationService.back();
   }
 }
