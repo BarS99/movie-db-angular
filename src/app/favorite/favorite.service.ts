@@ -7,7 +7,7 @@ import { getLocalStorage } from '../shared/utilities';
 export class FavoriteService {
   constructor() { }
 
-  addToFavorite(id: number): boolean {
+  addToFavorite(id: number): number[] {
     let favoriteArray = getLocalStorage('favorite');
 
     if (!favoriteArray.includes(id)) {
@@ -16,19 +16,19 @@ export class FavoriteService {
 
     localStorage.setItem('favorite', JSON.stringify(favoriteArray));
 
-    return true;
+    return favoriteArray;
   }
 
-  removeFromFavorite(id: number): boolean {
+  removeFromFavorite(id: number): number[] {
     let favoriteArray = getLocalStorage('favorite');
     
     favoriteArray = favoriteArray.filter((_id) => {
-      return _id !== id;
+      return parseInt(_id) !== id;
     })
 
     localStorage.setItem('favorite', JSON.stringify(favoriteArray));
 
-    return false;
+    return favoriteArray;
   }
 
   isFavorite(id: number): boolean {

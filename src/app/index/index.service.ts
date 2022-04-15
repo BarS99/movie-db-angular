@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppService } from '../app.service';
 import { delay, Observable } from 'rxjs';
 import { MovieHttpInterface } from '../shared/components/card/card.model';
 import { Api } from 'src/environments/environment';
