@@ -81,9 +81,13 @@ export class CardViewComponent implements OnInit {
 
   toggleFavorite(): void {
     if (this.isFavorite) {
-      this.isFavorite = this.favoriteService.removeFromFavorite(this.id);
+      this.favoriteService.removeFromFavorite(this.id);
+
+      this.isFavorite = false;
     } else {
-      this.isFavorite = this.favoriteService.addToFavorite(this.id);
+      this.favoriteService.addToFavorite(this.id);
+
+      this.isFavorite = true;
     }
   }
 
