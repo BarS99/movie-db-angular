@@ -33,7 +33,7 @@ export class CardViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = parseInt(params['id']);
     });
 
     this.isFavorite = this.favoriteService.isFavorite(this.id);

@@ -21,10 +21,10 @@ export class FavoriteService {
 
   removeFromFavorite(id: number): number[] {
     let favoriteArray = getLocalStorage('favorite');
-    
+
     favoriteArray = favoriteArray.filter((_id) => {
-      return parseInt(_id) !== id;
-    })
+      return _id !== id;
+    }) 
 
     localStorage.setItem('favorite', JSON.stringify(favoriteArray));
 
