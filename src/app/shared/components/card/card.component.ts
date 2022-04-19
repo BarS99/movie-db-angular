@@ -14,14 +14,21 @@ export class CardComponent implements OnInit {
   constructor(public appService : AppService) {
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get Path() {
     return `/movie/${this.data.id}`;
   }
 
+  get Thumbnail(): string {
+    return "/assets/images/thumbnail.jpg";
+  }
+
   get PosterPath() {
+    if (this.data.poster_path === null) {
+      return null;
+    }
+
     return `${Api.poster}${this.data.poster_path}`;
   }
 }

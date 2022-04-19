@@ -1,6 +1,9 @@
 <a class="card d-flex flex-column flex-grow-1" routerLink={{Path}}>
     <div class="card__image">
-        <img class="img-fluid" src={{PosterPath}} [alt]="'Poster of' + data.title">
+        <img *ngIf="PosterPath !== null; else thumbnail" class="img-fluid" src={{PosterPath}} [alt]="'Poster of' + data.title">
+        <ng-template #thumbnail>
+            <img src={{Thumbnail}} [alt]="'Poster of ' + data.title" class="img-fluid">
+        </ng-template>
     </div>
     <div class="card-body d-flex flex-column flex-grow-1">
         <div class="d-flex flex-column flex-grow-1">

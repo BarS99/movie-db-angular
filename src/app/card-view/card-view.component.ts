@@ -53,7 +53,15 @@ export class CardViewComponent implements OnInit {
   }
   
   get PosterPath(): string | null {
+    if (this.movie?.poster_path === null) {
+      return null;
+    }
+
     return `${Api.posterLg}${this.movie?.poster_path}`;
+  }
+
+  get Thumbnail(): string {
+    return "/assets/images/thumbnail.jpg";
   }
 
   get DetailsList(): DetailsInterface[] {

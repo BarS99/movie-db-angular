@@ -13,6 +13,6 @@ export class RatingComponent implements OnInit {
   ngOnInit(): void {}
 
   get Rating(): string {
-    return `${this.rating/10 * 100}%`;
+    return `${Math.floor(this.rating) / 10 * 100}%`;
   }
 }

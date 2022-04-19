@@ -54,6 +54,10 @@ export interface MovieViewInterface {
     id: number
     name: string
   }
+
+  export interface GenreHttpInterface {
+    genres: GenreInterface[];
+  }
   
   export interface ProductionCompanyInterface {
     id: number
@@ -72,4 +76,3 @@ export interface MovieViewInterface {
     iso_639_1: string
     name: string
   }
-  

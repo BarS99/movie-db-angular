@@ -2,13 +2,16 @@
     <div class="row">
         <div class="col-lg-6 mb-4">
             <div class="card-view__image">
-                <img src={{PosterPath}} [alt]="'Poster of ' + movie.title" class="img-fluid">
+                <img *ngIf="PosterPath !== null; else thumbnail" src={{PosterPath}} [alt]="'Poster of ' + movie.title" class="img-fluid">
+                <ng-template #thumbnail>
+                    <img src={{Thumbnail}} [alt]="'Poster of ' + movie.title" class="img-fluid">
+                </ng-template>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="row gap-4">
                 <div class="d-flex flex-column flex-sm-row align-items-center mb-2 gap-2 gap-sm-4">
-                    <time class="d-block" [attr.datetime]="getDateToIso(movie.release_date)">
+                    <time *ngIf="movie.release_date" class="d-block" [attr.datetime]="getDateToIso(movie.release_date)">
                         <fa-icon icon="calendar" class="me-2"></fa-icon>
                         {{movie.release_date}}
                     </time>
@@ -27,7 +30,7 @@
                     {{movie.title}}
                 </h1>
                 <div>
-                    <app-rating [rating]="movie.vote_average"></app-rating>
+                    <app-rating *ngIf="movie.vote_average" [rating]="movie.vote_average"></app-rating>
                     <p class="lh-base fs-5">
                         {{movie.overview}}
                     </p>
