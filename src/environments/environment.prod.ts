@@ -15,3 +15,5 @@ export const Api: ApiInterface = {
   poster: "https://image.tmdb.org/t/p/w500",
   posterLg: "https://image.tmdb.org/t/p/w780",
 };
+
+export const assets: string = "/movie-db-angular/assets";

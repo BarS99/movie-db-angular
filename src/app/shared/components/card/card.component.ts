@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Api } from 'src/environments/environment';
+import { Api, assets } from 'src/environments/environment';
 import { AppService } from '../../../app.service';
 import { MovieInterface } from './card.model';
 
@@ -20,7 +20,7 @@ export class CardComponent implements OnInit {
   }
 
   get Thumbnail(): string {
-    return "/assets/images/thumbnail.jpg";
+    return `${assets}/images/thumbnail.jpg`;
   }
 
   get PosterPath() {

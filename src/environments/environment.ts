@@ -20,6 +20,8 @@ export const Api: ApiInterface = {
   posterLg: "https://image.tmdb.org/t/p/w780",
 };
 
+export const assets: string = "/assets";
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

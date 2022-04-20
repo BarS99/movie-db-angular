@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDollar, faLink, faQuestion, faUserShield, faStar, faBan } from '@fortawesome/free-solid-svg-icons';
 import { dateToIso } from 'src/app/shared/utilities';
-import { Api } from 'src/environments/environment';
+import { Api, assets } from 'src/environments/environment';
 import { FavoriteService } from '../favorite/favorite.service';
 import { MovieViewInterface } from '../shared/components/card/card.model';
 import { CardViewService } from './card-view.service';
@@ -61,7 +61,7 @@ export class CardViewComponent implements OnInit {
   }
 
   get Thumbnail(): string {
-    return "/assets/images/thumbnail.jpg";
+    return `${assets}/images/thumbnail.jpg`;
   }
 
   get DetailsList(): DetailsInterface[] {
