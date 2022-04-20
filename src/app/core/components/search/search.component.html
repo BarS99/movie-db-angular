@@ -1,8 +1,8 @@
 <form id="search-form" #searchForm="ngForm" class="search-engine position-relative">
     <input autocomplete="off" ngModel class="form-control rounded-0 px-4" type="text" name="search" id="search" placeholder="Search a movie..." />
-    <div *ngIf="(this.autocomplete$ | async)?.length" class="search-engine__autocomplete position-absolute top-100 start-0 end-0 border border-gray bg-white text-black px-3 shadow">
+    <div *ngIf="this.autocomplete$ | async as autocomplete" class="search-engine__autocomplete position-absolute top-100 start-0 end-0 border border-gray bg-white text-black px-3 shadow">
         <ul class="p-0 m-0 list-unstyled">
-            <li *ngFor="let item of this.autocomplete$ | async" class="search-engine__autocomplete-item">
+            <li *ngFor="let item of autocomplete" class="search-engine__autocomplete-item">
                 <a class="search-engine__autocomplete-link d-flex w-100 align-items-center py-2" [href]="getHref(item.id)">
                     <img [src]="getPosterPath(item)" alt="" class="search-engine__image me-2 img-fluid">
                     <span>{{item.title}}</span>
