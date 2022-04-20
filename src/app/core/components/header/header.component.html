@@ -1,10 +1,13 @@
-<header class="header bg-dark text-white py-3">
-    <div class="container d-flex align-items-center">
-        <a class="d-flex align-items-center fw-bold text-white text-decoration-none" routerLink="/">
+<header class="header bg-dark text-white py-3 position-sticky top-0 start-0 end-0">
+    <div class="container d-flex flex-wrap flex-md-nowrap align-items-center">
+        <a class="d-flex align-items-center fw-bold text-white text-decoration-none order-1" routerLink="/">
             <fa-icon icon="video" class="me-2"></fa-icon>
             Movie db
         </a>
-        <nav class="header__nav ms-auto">
+
+        <app-search class="order-4 order-md-3 mt-2 mx-auto"></app-search>
+
+        <nav class="header__nav ms-auto order-3">
             <ul class="d-flex ps-4 m-0 gap-4">
                 <li class="header__nav-item d-block" *ngFor="let item of menu;">
                     <a class="header__nav-link d-block fw-bold" routerLink="{{item.path}}" routerLinkActive="active"

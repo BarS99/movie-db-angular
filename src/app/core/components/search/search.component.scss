@@ -1,0 +1,31 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+
+.search-engine__autocomplete {
+    margin-top: -1px;
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+}
+
+.search-engine__autocomplete-item + .search-engine__autocomplete-item {
+    border-top: 1px solid $gray-300;
+}
+
+.search-engine__autocomplete-link {
+    color: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    @include media-breakpoint-up(lg) {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.search-engine__image {
+    width: 2rem;
+    height: 2rem;
+}

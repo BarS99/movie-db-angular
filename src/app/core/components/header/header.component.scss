@@ -3,6 +3,8 @@
 @import '~bootstrap/scss/_mixins.scss';
 
 .header {
+    z-index: 1000;
+
     &__nav-link {
         color: #fff;
         text-decoration: none;
@@ -17,5 +19,13 @@
                 color: $danger;
             }
         }
+    }
+}
+
+app-search {
+    width: 100%;
+
+    @include media-breakpoint-up(md) {
+        width: 350px;
     }
 }
