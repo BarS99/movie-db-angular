@@ -12,7 +12,8 @@ import { SearchService } from './search.service';
 })
 export class SearchComponent implements OnInit, AfterViewInit {
   @ViewChild('searchForm') searchForm!: NgForm;
-  autocomplete$!: Observable<any>;
+  autocomplete$!: Observable<SearchInterface[]>|null;
+  searchInput = "";
 
   constructor(private searchService: SearchService) { }
 
@@ -22,6 +23,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchForm.valueChanges?.pipe(debounceTime(500)).subscribe((params) => {
       if (params.search?.length > 2) {
         this.search(params.search);
+      } else {
+        this.autocomplete$ = null;
       }
     })
   }
@@ -40,5 +43,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
     }
 
     return `${Api.poster}${item.poster_path}`;
+  }
+
+  onBlur() {
+    this.searchInput = "";
   }
 }
