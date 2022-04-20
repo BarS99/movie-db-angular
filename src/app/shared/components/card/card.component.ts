@@ -11,8 +11,7 @@ import { MovieInterface } from './card.model';
 export class CardComponent implements OnInit {
   @Input() data!: MovieInterface;
 
-  constructor(public appService : AppService) {
-  }
+  constructor(public appService : AppService) {}
 
   ngOnInit(): void {}
 
@@ -25,7 +24,7 @@ export class CardComponent implements OnInit {
   }
 
   get PosterPath() {
-    if (this.data.poster_path === null) {
+    if (this.data.poster_path === null || this.data?.adult === true) {
       return null;
     }
 

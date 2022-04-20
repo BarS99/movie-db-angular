@@ -53,7 +53,7 @@ export class CardViewComponent implements OnInit {
   }
   
   get PosterPath(): string | null {
-    if (this.movie?.poster_path === null) {
+    if (this.movie?.poster_path === null || this.movie?.adult === true) {
       return null;
     }
 
@@ -67,7 +67,7 @@ export class CardViewComponent implements OnInit {
   get DetailsList(): DetailsInterface[] {
     const result: DetailsInterface[] = [];
 
-    if (this.movie?.genres !== null && this.movie?.genres !== undefined) {
+    if (this.movie?.genres !== null && this.movie?.genres !== undefined && this.movie?.genres.length) {
       result.push({ icon: faQuestion, field: "Genres", value: this.movie?.genres.map(item => item.name).join(", ") });
     }
     if (this.movie?.revenue !== null && this.movie?.revenue !== undefined) {
@@ -76,7 +76,7 @@ export class CardViewComponent implements OnInit {
     if (this.movie?.adult !== null && this.movie?.adult !== undefined) {
       result.push({ icon: faUserShield, field: "For adults", value: this.movie?.adult ? "Yes" : "No" });
     }
-    if (this.movie?.homepage !== null && this.movie?.homepage !== undefined) {
+    if (this.movie?.homepage !== null && this.movie?.homepage !== undefined && this.movie?.homepage.length) {
       result.push({ icon: faLink, field: "Website", value: this.movie?.homepage });
     }
 

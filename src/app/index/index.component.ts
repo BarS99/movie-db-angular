@@ -57,9 +57,7 @@ export class IndexComponent implements OnInit {
 
     this.filtersForm.valueChanges.subscribe({
       next: (params) => {
-        if (this.movies.length) {
-          this.page = 1;
-        }
+        this.page = 1;
         this.movies = [];
         this.loading = true;
         this.indexService.getMovies({ ...params, page: this.page }).subscribe(this.moviesObserverDefault);
