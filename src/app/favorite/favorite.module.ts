@@ -4,6 +4,7 @@ import { FavoriteComponent } from './favorite.component';
 import { FavoriteRoutingModule } from './favorite-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FavoriteRoutingModule,
     NgbModule,
     FontAwesomeModule,
+    SharedModule
   ]
 })
 export class FavoriteModule { }
