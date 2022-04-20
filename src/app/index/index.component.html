@@ -11,11 +11,11 @@
 
     <form class="my-4" [formGroup]="filtersForm">
         <div class="row">
-            <div class="col-sm-6 mb-3" *ngIf="(genres$ | async)?.length">
+            <div class="col-sm-6 mb-3" *ngIf="genres$ | async as genres">
                 <label for="genre" class="form-label d-block fw-bold">Genre</label>
                 <select class="form-select" name="genre" id="genre" formControlName="genre">
                     <option value="" selected>All</option>
-                    <option *ngFor="let genre of genres$ | async" value={{genre.id}}>
+                    <option *ngFor="let genre of genres" value={{genre.id}}>
                         {{genre.name}}
                     </option>
                 </select>
