@@ -2,10 +2,7 @@
     <div class="row">
         <div class="col-lg-6 mb-4">
             <div class="card-view__image">
-                <img *ngIf="PosterPath !== null; else thumbnail" src={{PosterPath}} [alt]="'Poster of ' + movie.title" class="img-fluid">
-                <ng-template #thumbnail>
-                    <img src={{Thumbnail}} [alt]="'Poster of ' + movie.title" class="img-fluid">
-                </ng-template>
+                <img *ngIf="PosterPath !== null" src={{PosterPath}} [alt]="'Poster of ' + movie.title" class="img-fluid">
             </div>
         </div>
         <div class="col-lg-6">

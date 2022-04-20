@@ -19,14 +19,10 @@ export class CardComponent implements OnInit {
     return `/movie/${this.data.id}`;
   }
 
-  get Thumbnail(): string {
-    return `${assets}/images/thumbnail.jpg`;
-  }
-
   get PosterPath() {
     if (this.data.poster_path === null || this.data?.adult === true) {
-      return null;
-    }
+      return `${assets}/images/thumbnail.jpg`;
+    } 
 
     return `${Api.poster}${this.data.poster_path}`;
   }
