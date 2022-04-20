@@ -6,14 +6,10 @@ import { HeaderService, Menu } from './header.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   menu: Menu[] = [];
 
   constructor(private headerService: HeaderService) {
     this.menu = headerService.Menu;
   }
-
-  ngOnInit(): void {
-  }
-
 }
