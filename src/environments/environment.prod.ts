@@ -1,3 +1,5 @@
+export const domain: string = 'https://bars99.github.io/movie-db-angular';
+
 export const environment = {
   production: true
 };

@@ -3,11 +3,11 @@
     <div *ngIf="this.autocomplete$ | async as autocomplete" class="search-engine__autocomplete position-absolute top-100 start-0 end-0 border border-gray bg-white text-black px-3 shadow">
         <ul class="p-0 m-0 list-unstyled">
             <li *ngFor="let item of autocomplete" class="search-engine__autocomplete-item">
-                <a class="search-engine__autocomplete-link d-flex w-100 align-items-center py-2" [href]="getHref(item.id)">
+                <a class="search-engine__autocomplete-link d-flex w-100 align-items-center py-2" href={{getHref(item.id)}}>
                     <img [src]="getPosterPath(item)" alt="" class="search-engine__image me-2 img-fluid">
                     <span>{{item.title}}</span>
                 </a>
             </li>
         </ul>
     </div>
-</form>
+</form> 

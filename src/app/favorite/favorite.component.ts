@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faBan, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { delay, finalize, forkJoin, from, Observable, tap } from 'rxjs';
-import { Api } from 'src/environments/environment';
+import { Api, domain } from 'src/environments/environment';
 import { MovieViewInterface } from '../shared/components/card/card.model';
 import { getLocalStorage } from '../shared/utilities';
 import { FavoriteService } from './favorite.service';
@@ -32,8 +32,8 @@ export class FavoriteComponent implements OnInit {
     this.favorite$ = forkJoin(this.favoriteHttp$).pipe(delay(500));
   }
 
-  getPath(id: number): string {
-    return `/movie/${id}`;
+  getHref(id: number): string {
+    return `${domain}/movie/${id}`;
   }
 
   removeFromFavorite(id: number): void {

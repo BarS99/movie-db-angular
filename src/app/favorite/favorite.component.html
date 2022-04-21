@@ -21,7 +21,7 @@
                         <td>{{movie.title}}</td>
                         <td>{{movie.overview}}</td>
                         <td class="text-center">
-                            <a class="btn btn-sm btn-secondary text-center" [routerLink]='getPath(movie.id)'>
+                            <a class="btn btn-sm btn-secondary text-center" [routerLink]='getHref(movie.id)'>
                                 <fa-icon [icon]="iconLoupe"></fa-icon>
                             </a>
                         </td>

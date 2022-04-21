@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Api, assets } from 'src/environments/environment';
+import { Api, assets, domain } from 'src/environments/environment';
 import { AppService } from '../../../app.service';
 import { MovieInterface } from './card.model';
 
@@ -16,7 +16,7 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {}
 
   get Path() {
-    return `/movie/${this.data.id}`;
+    return `${domain}/movie/${this.data.id}`;
   }
 
   get PosterPath() {

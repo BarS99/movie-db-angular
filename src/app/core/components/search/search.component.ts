@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { debounceTime, Observable } from 'rxjs';
-import { Api, assets } from 'src/environments/environment';
+import { Api, assets, domain } from 'src/environments/environment';
 import { SearchInterface } from './search.model';
 import { SearchService } from './search.service';
 
@@ -10,14 +10,12 @@ import { SearchService } from './search.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements AfterViewInit {
   @ViewChild('searchForm') searchForm!: NgForm;
   autocomplete$!: Observable<SearchInterface[]>|null;
   searchInput = "";
 
   constructor(private searchService: SearchService) { }
-
-  ngOnInit(): void {}
   
   ngAfterViewInit(): void {
     this.searchForm.valueChanges?.pipe(debounceTime(500)).subscribe((params) => {
@@ -34,7 +32,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   getHref(id: number): string {
-    return `/movie/${id}`;
+    return `${domain}/movie/${id}`;
   }
 
   getPosterPath(item: SearchInterface): string {
