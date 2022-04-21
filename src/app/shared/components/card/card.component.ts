@@ -16,7 +16,7 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {}
 
   get Path() {
-    return `${domain}/movie/${this.data.id}`;
+    return `/movie/${this.data.id}`;
   }
 
   get PosterPath() {

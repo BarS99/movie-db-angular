@@ -33,7 +33,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   getHref(id: number): string {
-    return `${domain}/movie/${id}`;
+    return `/movie/${id}`;
   }
 
   removeFromFavorite(id: number): void {
