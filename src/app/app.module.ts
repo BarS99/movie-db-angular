@@ -12,14 +12,19 @@ import { CardComponent } from './shared/components/card/card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { FiltersComponent } from './index/components/filters/filters.component';
+import { filtersReducer } from './index/components/filters/store/filters.reducer';
+import { indexReducer } from './index/store/index.reducer';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     Page404Component,
-    CardComponent
+    CardComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -29,11 +34,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     CoreModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({ filters: filtersReducer, movies: indexReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {}
+  constructor() { }
 }

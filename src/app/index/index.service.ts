@@ -16,14 +16,6 @@ interface getMoviesInterface {
 export class IndexService {
   constructor(private http: HttpClient) {}
 
-  getGenres(): Observable<GenreInterface[]> {
-    const genres = this.http.get<GenreHttpInterface>(`${Api.url}/3/genre/movie/list?api_key=${Api.key}`).pipe(map((result) => {
-      return result.genres;
-    }));
-
-    return genres;
-  }
-
   getMovies(_params?: getMoviesInterface): Observable<MovieHttpInterface> {
     let params = new HttpParams;
     if (_params?.page) {
@@ -41,14 +33,4 @@ export class IndexService {
 
     return movies;
   }
-
-  generateYears(start: number, end: number): number[]  {
-    const years: number[] = [];
-  
-    for (let i = end; i >= start; i--) {
-      years.push(i);
-    }
-  
-    return years;
-  };
 }

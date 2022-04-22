@@ -1,0 +1,22 @@
+<form class="my-4" [formGroup]="filtersForm">
+    <div class="row">
+        <div class="col-sm-6 mb-3" *ngIf="genres$ | async as genres">
+            <label for="genre" class="form-label d-block fw-bold">Genre</label>
+            <select (change)="updateGenre()" class="form-select" name="genre" id="genre" formControlName="genre">
+                <option value="">All</option>
+                <option *ngFor="let genre of genres" value={{genre.id}}>
+                    {{genre.name}}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-6 mb-3">
+            <label for="year" class="form-label d-block fw-bold">Year</label>
+            <select (change)="updateYear()" class="form-select" name="year" id="year" formControlName="year">
+                <option value="">All</option>
+                <option *ngFor="let year of generateYears()" value={{year}}>
+                    {{year}}
+                </option>
+            </select>
+        </div>
+    </div>
+</form>
