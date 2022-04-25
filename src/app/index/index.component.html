@@ -3,24 +3,26 @@
         {{title}}
     </h1>
 
-    <div *ngIf="alertMessage">
-        <ngb-alert type="info" [dismissible]="false">
-            {{alertMessage}}
-        </ngb-alert>
-    </div>
-
     <app-filters></app-filters>
 
-    <div class="row" *ngIf="movies.length">
-        <app-card class="col-6 col-sm-6 col-md-4 col-lg-3 pb-4 d-flex" *ngFor="let movie of movies" [data]="movie">
-        </app-card>
-    </div>
+    <ngb-alert *ngIf="error$ | async; else movies" type="info" [dismissible]="false">
+        Failed to fetch the movies!
+    </ngb-alert>
 
-    <div *ngIf="!loading && !alertMessage && page < maxPage" class="text-center py-2">
-        <button class="btn btn-secondary" (click)="fetchMovies(page)">
+    <ng-template #movies>
+        <div class="row" *ngIf="movies$ | async as movies">
+            <app-card class="col-6 col-sm-6 col-md-4 col-lg-3 pb-4 d-flex" *ngFor="let movie of movies"
+                [data]="movie">
+            </app-card>
+        </div>
+    </ng-template>
+
+
+    <div *ngIf="displayFetchButton$ | async" class="text-center py-2">
+        <button class="btn btn-secondary" (click)="fetchMovies()">
             Load more
         </button>
     </div>
 
-    <app-loader *ngIf="loading"></app-loader>
+    <app-loader *ngIf="loading$ | async"></app-loader>
 </section>

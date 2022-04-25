@@ -1,39 +1,32 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppStateInterface } from 'src/app/app.state';
 import { GenreInterface } from 'src/app/shared/components/card/card.model';
 import { FiltersService } from './filters.service';
-import { updateGenre, updateYear } from './store/filters.actions';
-import { FiltersStoreInterface } from './store/filters.reducer';
+import { updateGenre, updateYear } from './state/filters.actions';
+import { selectFilters } from './state/filters.selectors';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss']
 })
-export class FiltersComponent implements OnInit, AfterViewInit  {
-  filtersForm!: FormGroup;
+export class FiltersComponent implements OnInit  {
   genres$!: Observable<GenreInterface[]>;
+  genreId: string = "";
+  year: string = "";
 
-  constructor(private filtersService: FiltersService, private formBuilder: FormBuilder, private store: Store<{filters: FiltersStoreInterface}>) {}
+  constructor(private filtersService: FiltersService, private formBuilder: FormBuilder, private store: Store<AppStateInterface>) {}
 
   ngOnInit(): void {
-    this.filtersForm = this.formBuilder.group({
-      genre: new FormControl(""),
-      year: new FormControl(""),
-    });
-
     this.genres$ = this.filtersService.getGenres();
-  }
 
-  ngAfterViewInit(): void {
-    this.store.select('filters').subscribe((params) => {
-      this.filtersForm.setValue({
-        genre: params.genre || "",
-        year: params.year || "",
-      })
-    });
+    this.store.select(selectFilters).subscribe((state) => {
+      this.genreId = state.genreId;
+      this.year = state.year;
+    })
   }
 
   generateYears(): number[] {
@@ -41,10 +34,10 @@ export class FiltersComponent implements OnInit, AfterViewInit  {
   }
 
   updateGenre() {
-    this.store.dispatch(updateGenre({genre: this.filtersForm.value.genre}));
+    this.store.dispatch(updateGenre({genreId: this.genreId}));
   }
 
   updateYear() {
-    this.store.dispatch(updateYear({year: this.filtersForm.value.year}));
+    this.store.dispatch(updateYear({year: this.year}));
   }
 }

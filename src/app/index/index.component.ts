@@ -1,71 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { IndexService } from './index.service';
-import { MovieInterface, MovieHttpInterface } from '../shared/components/card/card.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as IndexActions from './state/index.actions';
+import * as IndexSelectors from './state/index.selectors';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, OnDestroy {
   title: string = "Trending now";
-  movies: MovieInterface[] = [];
-  page: number = 1;
-  maxPage: number = -1;
-  alertMessage: string | boolean = "";
-  loading: boolean = true;
+  movies$ = this.store.select(IndexSelectors.selectMovies);
+  loading$ = this.store.select(IndexSelectors.selectLoading);
+  error$ = this.store.select(IndexSelectors.selectError);
+  displayFetchButton$ = this.store.select(IndexSelectors.selectDisplayFetchButton);
 
-  constructor(private indexService: IndexService) { }
-
-  private moviesObserverDefault = {
-    next: (response: MovieHttpInterface) => {
-      this.movies = [...this.movies, ...response.results];
-      if (this.maxPage < 1) {
-        if (response.total_pages > 500) {
-          this.maxPage = 500;
-        } else {
-          this.maxPage = response.total_pages;
-        }
-      }
-    },
-    error: () => {
-      this.movies = []
-      this.loading = false;
-      this.alertMessage = "Failed to fetch the movies!";
-    },
-    complete: () => {
-      this.loading = false;
-      this.page = this.page + 1;
-    },
-  }
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    // this.filtersForm = this.formBuilder.group({
-    //   genre: new FormControl(""),
-    //   year: new FormControl(""),
-    // });
-
-    // this.filtersForm.valueChanges.subscribe({
-    //   next: (params) => {
-    //     this.page = 1;
-    //     this.movies = [];
-    //     this.loading = true;
-    //     this.indexService.getMovies({ ...params, page: this.page }).subscribe(this.moviesObserverDefault);
-    //   },
-    //   error: this.moviesObserverError,
-    //   complete: this.moviesObserverComplete,
-    // })
-
-    // this.genres$ = this.indexService.getGenres();
-    // this.indexService.getMovies({ ...this.filtersForm.value, page: this.page }).subscribe(this.moviesObserverDefault);
-    this.indexService.getMovies({ page: this.page }).subscribe(this.moviesObserverDefault);
+    this.store.dispatch(IndexActions.loadMovies({}));
   }
 
-  fetchMovies(page: number): void {
-    this.loading = true;
-    if (this.page > this.maxPage) return;
+  ngOnDestroy(): void {
+    this.store.dispatch(IndexActions.resetMovies());
+  }
 
-    // this.indexService.getMovies({ ...this.filtersForm.value, page: page }).subscribe(this.moviesObserverDefault)
-    this.indexService.getMovies({ page: page }).subscribe(this.moviesObserverDefault)
+  fetchMovies(): void {
+    this.store.dispatch(IndexActions.loadMovies({}));
   }
 }
