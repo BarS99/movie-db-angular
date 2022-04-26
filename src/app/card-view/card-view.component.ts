@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faBan } from '@fortawesome/free-solid-svg-icons';
+import { filter } from 'rxjs';
 import { dateToIso } from 'src/app/shared/utilities';
 import { Api, assets } from 'src/environments/environment';
 import { FavoriteService } from '../favorite/favorite.service';
@@ -24,33 +25,52 @@ export class CardViewComponent implements OnInit {
   starIcon: IconDefinition = faStar;
   banIcon: IconDefinition = faBan;
 
-  constructor(private route: ActivatedRoute, private cardViewService: CardViewService, private favoriteService: FavoriteService, private locationService: Location) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id = parseInt(params['id']);
-    });
-
-    this.isFavorite = this.favoriteService.isFavorite(this.id);
-
-    this.cardViewService.getMovie(this.id).subscribe({
-      next: (response) => {
-        this.movie = response;
-      },
-      error: () => {
-        this.alertMessage = "Failed to fetch the movie!";
-        this.loading = false;
-      },
-      complete: () => {
-        this.loading = false;
-      }
+  
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private cardViewService: CardViewService,
+    private favoriteService: FavoriteService,
+    private locationService: Location
+  ) {
+    this.router.events.pipe(filter((event) => {
+      return event instanceof NavigationStart
+    })).subscribe((params) => {
+      this.fetchMovie();
     })
   }
-  
+
+  ngOnInit(): void {
+    this.fetchMovie();
+  }
+
+  fetchMovie(): void {
+    this.loading = true;
+
+    this.activatedRoute.params.subscribe(params => {
+      this.id = parseInt(params['id']);
+
+      this.isFavorite = this.favoriteService.isFavorite(this.id);
+
+      this.cardViewService.getMovie(this.id).subscribe({
+        next: (response) => {
+          this.movie = response;
+        },
+        error: () => {
+          this.alertMessage = "Failed to fetch the movie!";
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      })
+    });
+  }
+
   get PosterPath(): string | null {
     if (this.movie?.poster_path === null || this.movie?.adult === true) {
       return `${assets}/images/thumbnail.jpg`;
-    } 
+    }
 
     return `${Api.posterLg}${this.movie?.poster_path}`;
   }
@@ -71,7 +91,7 @@ export class CardViewComponent implements OnInit {
     } else {
       this.favoriteService.addToFavorite(this.id);
 
-      this.isFavorite = true; 
+      this.isFavorite = true;
     }
   }
 
