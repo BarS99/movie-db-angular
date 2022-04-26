@@ -8,22 +8,13 @@ import * as FiltersActions from "./filters.actions";
 export class FiltersEffects {
     updateGenre$ = createEffect(() => this.actions$.pipe(
         ofType(FiltersActions.updateGenre.type),
-        map(() => FiltersActions.refreshFilters()),
-        catchError(() => of(FiltersActions.refreshFilters()))
+        map(() => IndexActions.reloadMovies())
     ))
 
     updateYear$ = createEffect(() => this.actions$.pipe(
         ofType(FiltersActions.updateYear.type),
-        map(() => FiltersActions.refreshFilters()),
-        catchError(() => of(FiltersActions.refreshFilters()))
+        map(() => IndexActions.reloadMovies()),
     ))
 
-    // refreshFilters$ = createEffect(() => this.actions$.pipe(
-    //     ofType(FiltersActions.refreshFilters.type),
-    //     map(() => {
-    //         return IndexActions.resetMovies();
-    //     }),
-    // ))
- 
     constructor(private actions$: Actions) {}
 }

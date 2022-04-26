@@ -18,7 +18,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(IndexActions.loadMovies({}));
+    this.store.dispatch(IndexActions.initMovies());
   }
 
   ngOnDestroy(): void {
@@ -26,6 +26,6 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   fetchMovies(): void {
-    this.store.dispatch(IndexActions.loadMovies({}));
+    this.store.dispatch(IndexActions.fetchMovies({}));
   }
 }

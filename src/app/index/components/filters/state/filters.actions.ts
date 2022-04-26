@@ -1,15 +1,11 @@
 import { createAction, props } from "@ngrx/store";
 
 export const updateGenre = createAction(
-    '[Filters Action] Update genre',
+    '[Filters Component] Update genre',
     props<{ genreId: string }>()
 )
 
 export const updateYear = createAction(
-    '[Filters Action] Update year',
+    '[Filters Component] Update year',
     props<{ year: string }>()
-)
-
-export const refreshFilters = createAction(
-    '[Filters Action] Refresh filters',
 )

@@ -19,14 +19,33 @@ export const indexReducer = createReducer(
             nextPage: 1,
         }
     }),
-    on(IndexActions.loadMovies, (state) => {
+    on(IndexActions.initMovies, IndexActions.reloadMovies, (state) => {
         return {
-            ...state,
+            ...state, 
+            movies: [],
+            loading: true,
+            displayFetchButton: false,
+            nextPage: 1,
+        }
+    }),
+    on(IndexActions.fetchMovies, (state) => {
+        return {
+            ...state, 
             loading: true,
             displayFetchButton: false,
         }
     }),
-    on(IndexActions.loadMoviesSuccess, (state, {movies}) => {
+    on(IndexActions.initMoviesSuccess, IndexActions.reloadMoviesSuccess, (state, {movies}) => {
+        return {
+            ...state,
+            movies: movies,
+            error: false,
+            loading: false,
+            displayFetchButton: true,
+            nextPage: state.nextPage + 1
+        }
+    }),
+    on(IndexActions.fetchMoviesSuccess, (state, {movies}) => {
         return {
             ...state,
             movies: [...state.movies, ...movies],
@@ -36,7 +55,7 @@ export const indexReducer = createReducer(
             nextPage: state.nextPage + 1
         }
     }),
-    on(IndexActions.loadMoviesFailure, (state) => {
+    on(IndexActions.fetchMoviesFailure, IndexActions.initMoviesFailure, IndexActions.reloadMoviesFailure, (state) => {
         return {
             ...state,
             error: true,

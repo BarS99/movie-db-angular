@@ -9,16 +9,44 @@ import { selectPage } from "./index.selectors";
 
 @Injectable()
 export class IndexEffects {
-    loadMovies$ = createEffect(() => this.actions$.pipe(
-        ofType(FiltersActions.loadMovies.type),
+    initMovies$ = createEffect(() => this.actions$.pipe(
+        ofType(FiltersActions.initMovies.type),
         withLatestFrom(this.store.select(selectFilters), this.store.select(selectPage), (action, filters, page) => {
             return [action, {...filters, page: page}];
         }),
         mergeMap(
             ([action, storeState]) => this.indexService.getMovies(storeState)
             .pipe(
-                map((movies) => FiltersActions.loadMoviesSuccess({ movies: movies.results })),
-                catchError(() => of(FiltersActions.loadMoviesFailure()))
+                map((movies) => FiltersActions.initMoviesSuccess({ movies: movies.results })),
+                catchError(() => of(FiltersActions.initMoviesFailure()))
+            )
+        )
+    ))
+
+    loadMovies$ = createEffect(() => this.actions$.pipe(
+        ofType(FiltersActions.fetchMovies.type),
+        withLatestFrom(this.store.select(selectFilters), this.store.select(selectPage), (action, filters, page) => {
+            return [action, {...filters, page: page}];
+        }),
+        mergeMap(
+            ([action, storeState]) => this.indexService.getMovies(storeState)
+            .pipe(
+                map((movies) => FiltersActions.fetchMoviesSuccess({ movies: movies.results })),
+                catchError(() => of(FiltersActions.fetchMoviesFailure()))
+            )
+        )
+    ))
+
+    reloadMovies$ = createEffect(() => this.actions$.pipe(
+        ofType(FiltersActions.reloadMovies.type),
+        withLatestFrom(this.store.select(selectFilters), this.store.select(selectPage), (action, filters, page) => {
+            return [action, {...filters, page: page}];
+        }),
+        mergeMap(
+            ([action, storeState]) => this.indexService.getMovies(storeState)
+            .pipe(
+                map((movies) => FiltersActions.reloadMoviesSuccess({ movies: movies.results })),
+                catchError(() => of(FiltersActions.reloadMoviesFailure()))
             )
         )
     ))
