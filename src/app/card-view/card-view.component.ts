@@ -2,18 +2,13 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faDollar, faLink, faQuestion, faUserShield, faStar, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faBan } from '@fortawesome/free-solid-svg-icons';
 import { dateToIso } from 'src/app/shared/utilities';
 import { Api, assets } from 'src/environments/environment';
 import { FavoriteService } from '../favorite/favorite.service';
 import { MovieViewInterface } from '../shared/components/card/card.model';
+import { DetailsInterface } from './card-view.model';
 import { CardViewService } from './card-view.service';
-
-interface DetailsInterface {
-  icon: IconDefinition,
-  field: string,
-  value: any
-}
 
 @Component({
   selector: 'app-card-view',
@@ -61,22 +56,7 @@ export class CardViewComponent implements OnInit {
   }
 
   get DetailsList(): DetailsInterface[] {
-    const result: DetailsInterface[] = [];
-
-    if (this.movie?.genres !== null && this.movie?.genres !== undefined && this.movie?.genres.length) {
-      result.push({ icon: faQuestion, field: "Genres", value: this.movie?.genres.map(item => item.name).join(", ") });
-    }
-    if (this.movie?.revenue !== null && this.movie?.revenue !== undefined) {
-      result.push({ icon: faDollar, field: "Box office", value: `${this.movie?.revenue.toLocaleString()}$` });
-    }
-    if (this.movie?.adult !== null && this.movie?.adult !== undefined) {
-      result.push({ icon: faUserShield, field: "For adults", value: this.movie?.adult ? "Yes" : "No" });
-    }
-    if (this.movie?.homepage !== null && this.movie?.homepage !== undefined && this.movie?.homepage.length) {
-      result.push({ icon: faLink, field: "Website", value: this.movie?.homepage });
-    }
-
-    return result;
+    return this.cardViewService.getDetailsList(this.movie);
   }
 
   getDateToIso(date: string): string {
@@ -91,7 +71,7 @@ export class CardViewComponent implements OnInit {
     } else {
       this.favoriteService.addToFavorite(this.id);
 
-      this.isFavorite = true;
+      this.isFavorite = true; 
     }
   }
 
