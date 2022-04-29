@@ -33,11 +33,7 @@ export class CardViewComponent implements OnInit {
     private favoriteService: FavoriteService,
     private locationService: Location
   ) {
-    this.router.events.pipe(filter((event) => {
-      return event instanceof NavigationStart
-    })).subscribe((params) => {
-      this.fetchMovie();
-    })
+    this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => this.fetchMovie())
   }
 
   ngOnInit(): void {
