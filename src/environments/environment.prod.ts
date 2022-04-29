@@ -19,3 +19,10 @@ export const Api: ApiInterface = {
 };
 
 export const assets: string = "/movie-db-angular/assets";
+interface CommentsApiInterface {
+  url: string,
+}
+
+export const commentsApi: CommentsApiInterface = {
+  url: "https://620c09d9b57363259385646b.mockapi.io/data",
+}
