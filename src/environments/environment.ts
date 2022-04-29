@@ -24,6 +24,14 @@ export const Api: ApiInterface = {
 
 export const assets: string = "/assets";
 
+interface CommentsApiInterface {
+  url: string,
+}
+
+export const commentsApi: CommentsApiInterface = {
+  url: "https://620c09d9b57363259385646b.mockapi.io/data",
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

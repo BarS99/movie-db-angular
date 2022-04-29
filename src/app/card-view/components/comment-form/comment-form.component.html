@@ -1,0 +1,79 @@
+<div class="form__wrapper" #formWrapper>
+    <ngb-alert *ngIf="formDisplaySuccess" type="success" [dismissible]="true">
+        Your comment has been posted!
+    </ngb-alert>
+    <ngb-alert *ngIf="formDisplayFailure" type="error" [dismissible]="true">
+        Failed to post the comment!
+    </ngb-alert>
+    <form class="form p-4 bg-light border" [formGroup]="form" (ngSubmit)="onSubmit(form.value)"
+        [ngClass]="{'form--collapsed': isFormCollapsed}">
+        <fieldset>
+            <legend class="d-flex justify-content-between align-items-center h4 m-0">
+                <span>
+                    Post a comment
+                </span>
+                <button class="btn btn-sm btn-primary ms-4" type="button" (click)="toggleForm()">
+                    <fa-icon icon="minus" *ngIf="isFormCollapsed"></fa-icon>
+                    <fa-icon icon="plus" *ngIf="!isFormCollapsed"></fa-icon>
+                </button>
+            </legend>
+            <div class="pt-3 form__separator"></div>
+            <div class="pt-3 border-top form__content">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-4 mb-3">
+                        <label class="form-label d-block fw-bold" for="commentName">
+                            Name<span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" name="commentName" id="commentName" formControlName="commentName">
+                        <span *ngIf="formDisplayErrors && this.form.get('commentName')?.errors?.['required']"
+                            class="form__error">This field is required</span>
+                    </div>
+                    <div class="col-xs-12 col-lg-4 mb-3">
+                        <label class="form-label d-block fw-bold" for="commentEmail">
+                            E-mail<span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" name="commentEmail" id="commentEmail"
+                            formControlName="commentEmail">
+                        <span *ngIf="formDisplayErrors && this.form.get('commentEmail')?.errors?.['required']"
+                            class="form__error">This field is required</span>
+
+                        <span *ngIf="formDisplayErrors && this.form.get('commentEmail')?.errors?.['pattern']"
+                            class="form__error">This e-mail address is incorrect</span>
+                    </div>
+                    <div class="col-xs-12 col-lg-4 mb-3">
+                        <label class="form-label d-block fw-bold" for="commentPhone">
+                            Phone number
+                        </label>
+                        <input class="form-control" name="commentPhone" id="commentPhone"
+                            formControlName="commentPhone">
+                        <span *ngIf="formDisplayErrors && this.form.get('commentPhone')?.errors?.['pattern']"
+                            class="form__error">Error phone</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <label class="form-label d-block fw-bold" for="commentValue">
+                            Comment<span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control form-control-textarea" name="commentValue" id="commentValue"
+                            formControlName="commentValue"></textarea>
+
+                        <span *ngIf="formDisplayErrors && this.form.get('commentValue')?.errors?.['required']"
+                            class="form__error">This field is required</span>
+
+                        <span
+                            *ngIf="formDisplayErrors && this.form.get('commentValue')?.errors?.['minLength'] as commentValueMinLengthErrror"
+                            class="form__error">
+                            {{ commentValueMinLengthErrror }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center mt-4">
+                        <button class="btn btn-md btn-success" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

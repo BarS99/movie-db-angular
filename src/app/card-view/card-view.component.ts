@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faBan } from '@fortawesome/free-solid-svg-icons';
-import { filter } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { dateToIso } from 'src/app/shared/utilities';
 import { Api, assets } from 'src/environments/environment';
 import { FavoriteService } from '../favorite/favorite.service';
 import { MovieViewInterface } from '../shared/components/card/card.model';
 import { DetailsInterface } from './card-view.model';
 import { CardViewService } from './card-view.service';
+import { CommentInterface } from './components/comment/comment.model';
+import { CommentService } from './components/comment/comment.service';
 
 @Component({
   selector: 'app-card-view',
@@ -24,12 +26,13 @@ export class CardViewComponent implements OnInit {
   loading: boolean = true;
   starIcon: IconDefinition = faStar;
   banIcon: IconDefinition = faBan;
-
+  comments$?: Observable<CommentInterface[]>;
   
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cardViewService: CardViewService,
+    private commentService: CommentService,
     private favoriteService: FavoriteService,
     private locationService: Location
   ) {
@@ -51,6 +54,8 @@ export class CardViewComponent implements OnInit {
       this.cardViewService.getMovie(this.id).subscribe({
         next: (response) => {
           this.movie = response;
+          
+          this.comments$ = this.commentService.getComments(this.movie.id);
         },
         error: () => {
           this.alertMessage = "Failed to fetch the movie!";
@@ -93,5 +98,9 @@ export class CardViewComponent implements OnInit {
 
   goBack(): void {
     this.locationService.back();
+  }
+
+  onUpdateComments(event: any): void {
+    this.comments$ = this.commentService.getComments(this.movie!.id);
   }
 }

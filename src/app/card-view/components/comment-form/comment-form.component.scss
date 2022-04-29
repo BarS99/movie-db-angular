@@ -1,0 +1,28 @@
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+
+.form-control-textarea {
+    min-height: 200px;
+}
+
+.form__separator {
+    display: none;
+}
+
+.form__content {
+    display: none;
+}
+
+.form--collapsed {
+    .form__separator {
+        display: block;
+    }
+    .form__content {
+        display: block;
+    }
+}
+
+.form__error {
+    color: $danger;
+}

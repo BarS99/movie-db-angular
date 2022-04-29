@@ -5,17 +5,23 @@ import { CardViewRoutingModule } from './card-view-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommentComponent } from './components/comment/comment.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    CardViewComponent
+    CardViewComponent,
+    CommentComponent,
+    CommentFormComponent,
   ],
   imports: [
     CommonModule,
     CardViewRoutingModule,
     FontAwesomeModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
   ]
 })
 export class CardViewModule {

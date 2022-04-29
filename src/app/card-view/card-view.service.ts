@@ -34,7 +34,7 @@ export class CardViewService {
     }
     if (data?.homepage !== null && data?.homepage !== undefined && data?.homepage.length) {
       result.push({ icon: faLink, field: "Website", value: data?.homepage });
-    }
+    } 
 
     return result;
   }
