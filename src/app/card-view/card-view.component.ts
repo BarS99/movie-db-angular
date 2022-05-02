@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faBan } from '@fortawesome/free-solid-svg-icons';
-import { filter } from 'rxjs';
+import { filter, Observable, Subscription, tap } from 'rxjs';
 import { dateToIso } from 'src/app/shared/utilities';
 import { Api, assets } from 'src/environments/environment';
 import { FavoriteService } from '../favorite/favorite.service';
@@ -24,7 +24,8 @@ export class CardViewComponent implements OnInit {
   loading: boolean = true;
   starIcon: IconDefinition = faStar;
   banIcon: IconDefinition = faBan;
-  
+  navigationStart$: Subscription;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -32,7 +33,10 @@ export class CardViewComponent implements OnInit {
     private favoriteService: FavoriteService,
     private locationService: Location
   ) {
-    this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => this.fetchMovie())
+    this.navigationStart$ = this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => {
+      this.fetchMovie();
+    })
+
   }
 
   ngOnInit(): void {
@@ -47,7 +51,7 @@ export class CardViewComponent implements OnInit {
 
       this.isFavorite = this.favoriteService.isFavorite(this.id);
 
-      this.cardViewService.getMovie(this.id).subscribe({
+      const movieObservable$: Subscription = this.cardViewService.getMovie(this.id).subscribe({
         next: (response) => {
           this.movie = response;
         },
@@ -57,8 +61,10 @@ export class CardViewComponent implements OnInit {
         },
         complete: () => {
           this.loading = false;
+          movieObservable$.unsubscribe();
+          this.navigationStart$.unsubscribe();
         }
-      })
+      });
     });
   }
 
