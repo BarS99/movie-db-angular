@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { FiltersFeatureInterface, FiltersInterface } from "../filters.model";
+import { FiltersStateInterface } from "../filters.model";
 
-export const selectFiltersFeature = createFeatureSelector<FiltersFeatureInterface>('filters');
+export const selectFiltersFeature = createFeatureSelector<FiltersStateInterface>('filters');
 
 export const selectFilters = createSelector(
     selectFiltersFeature,
-    (state: FiltersFeatureInterface) => state.filters
+    (state: FiltersStateInterface) => state.filters
 )

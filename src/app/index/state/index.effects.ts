@@ -4,49 +4,49 @@ import { Store } from "@ngrx/store";
 import { catchError, map, mergeMap, of, withLatestFrom } from "rxjs";
 import { selectFilters } from "../components/filters/state/filters.selectors";
 import { IndexService } from "../index.service";
-import * as FiltersActions from "./index.actions";
+import { fetchMovies, fetchMoviesFailure, fetchMoviesSuccess, initMovies, initMoviesFailure, initMoviesSuccess, reloadMovies, reloadMoviesFailure, reloadMoviesSuccess } from "./index.actions";
 import { selectPage } from "./index.selectors";
 
 @Injectable()
 export class IndexEffects {
     initMovies$ = createEffect(() => this.actions$.pipe(
-        ofType(FiltersActions.initMovies.type),
+        ofType(initMovies.type),
         withLatestFrom(this.store.select(selectFilters), this.store.select(selectPage), (action, filters, page) => {
             return [action, {...filters, page: page}];
         }),
         mergeMap(
             ([action, storeState]) => this.indexService.getMovies(storeState)
             .pipe(
-                map((movies) => FiltersActions.initMoviesSuccess({ movies: movies.results })),
-                catchError(() => of(FiltersActions.initMoviesFailure()))
+                map((movies) => initMoviesSuccess({ movies: movies.results })),
+                catchError(() => of(initMoviesFailure()))
             )
         )
     ))
 
     loadMovies$ = createEffect(() => this.actions$.pipe(
-        ofType(FiltersActions.fetchMovies.type),
+        ofType(fetchMovies.type),
         withLatestFrom(this.store.select(selectFilters), this.store.select(selectPage), (action, filters, page) => {
             return [action, {...filters, page: page}];
         }),
         mergeMap(
             ([action, storeState]) => this.indexService.getMovies(storeState)
             .pipe(
-                map((movies) => FiltersActions.fetchMoviesSuccess({ movies: movies.results })),
-                catchError(() => of(FiltersActions.fetchMoviesFailure()))
+                map((movies) => fetchMoviesSuccess({ movies: movies.results })),
+                catchError(() => of(fetchMoviesFailure()))
             )
         )
     ))
 
     reloadMovies$ = createEffect(() => this.actions$.pipe(
-        ofType(FiltersActions.reloadMovies.type),
+        ofType(reloadMovies.type),
         withLatestFrom(this.store.select(selectFilters), this.store.select(selectPage), (action, filters, page) => {
             return [action, {...filters, page: page}];
         }),
         mergeMap(
             ([action, storeState]) => this.indexService.getMovies(storeState)
             .pipe(
-                map((movies) => FiltersActions.reloadMoviesSuccess({ movies: movies.results })),
-                catchError(() => of(FiltersActions.reloadMoviesFailure()))
+                map((movies) => reloadMoviesSuccess({ movies: movies.results })),
+                catchError(() => of(reloadMoviesFailure()))
             )
         )
     ))

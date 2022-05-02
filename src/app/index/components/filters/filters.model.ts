@@ -1,4 +1,4 @@
-export interface FiltersFeatureInterface {
+export interface FiltersStateInterface {
     filters: FiltersInterface
 }
 

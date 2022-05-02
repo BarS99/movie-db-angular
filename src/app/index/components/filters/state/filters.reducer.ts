@@ -1,8 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
-import { FiltersFeatureInterface } from "../filters.model";
+import { FiltersStateInterface } from "../filters.model";
 import * as FiltersActions from "./filters.actions";
 
-const initialState: FiltersFeatureInterface = {
+const initialState: FiltersStateInterface = {
     filters: {
         genreId: "",
         year: "",
