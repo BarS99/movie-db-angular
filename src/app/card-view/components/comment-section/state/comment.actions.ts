@@ -19,6 +19,20 @@ export const loadCommentsFailure = createAction(
     '[Card View Page -> Comments Section] Load Comments Failure'
 )
 
+export const reloadComments = createAction(
+    '[Card View Page -> Comments Section] Reload Comments',
+    props<{ movieId: number }>()
+)
+
+export const reloadCommentsSuccess = createAction(
+    '[Card View Page -> Comments Section] Reload Comments Success',
+    props<{ comments: CommentInterface[] }>()
+)
+
+export const reloadCommentsFailure = createAction(
+    '[Card View Page -> Comments Section] Reload Comments Failure'
+)
+
 export const postComment = createAction(
     '[Card View Page -> Comments Section] Post Comment',
     props<{ comment: CommentInterface }>()

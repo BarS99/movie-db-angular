@@ -35,6 +35,23 @@ export const commentReducer = createReducer(
             comments: []
         }
     }),
+    on(CommentActions.reloadComments, (state) => {
+        return {
+            ...state
+        }
+    }),
+    on(CommentActions.reloadCommentsSuccess, (state, {comments}) => {
+        return {
+            ...state,
+            comments: [...comments].reverse(),
+        }
+    }),
+    on(CommentActions.reloadCommentsFailure, (state) => {
+        return {
+            ...state,
+            comments: []
+        }
+    }),
     on(CommentActions.postComment, (state) => {
         return {
             ...state

@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, map, mergeMap, of, takeUntil } from "rxjs";
+import { catchError, map, mergeMap, of } from "rxjs";
 import { CommentService } from "../components/comment/comment.service";
-import { loadComments, loadCommentsFailure, loadCommentsSuccess, postComment, postCommentFailure, postCommentSuccess, destroyComments } from "./comment.actions";
+import { loadComments, loadCommentsFailure, loadCommentsSuccess, postComment, postCommentFailure, postCommentSuccess, reloadComments, reloadCommentsFailure, reloadCommentsSuccess } from "./comment.actions";
 
 @Injectable()
 export class CommentEffects {
@@ -13,6 +13,17 @@ export class CommentEffects {
             .pipe(
                 map(comments => loadCommentsSuccess({comments})),
                 catchError(() => of(loadCommentsFailure())),
+            )
+        )
+    ))
+
+    reloadComments$ = createEffect(() => this.actions$.pipe(
+        ofType(reloadComments.type),
+        mergeMap(
+            ({movieId}) => this.commentService$.getComments(movieId)
+            .pipe(
+                map(comments => reloadCommentsSuccess({comments})),
+                catchError(() => of(reloadCommentsFailure())),
             )
         )
     ))

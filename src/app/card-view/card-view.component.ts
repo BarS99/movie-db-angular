@@ -1,15 +1,17 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faStar, faBan } from '@fortawesome/free-solid-svg-icons';
-import { filter, Observable, Subscription, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { filter, Subscription } from 'rxjs';
 import { dateToIso } from 'src/app/shared/utilities';
 import { Api, assets } from 'src/environments/environment';
 import { FavoriteService } from '../favorite/favorite.service';
 import { MovieViewInterface } from '../shared/components/card/card.model';
 import { DetailsInterface } from './card-view.model';
 import { CardViewService } from './card-view.service';
+import { reloadComments } from './components/comment-section/state/comment.actions';
 
 @Component({
   selector: 'app-card-view',
@@ -31,12 +33,12 @@ export class CardViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cardViewService: CardViewService,
     private favoriteService: FavoriteService,
-    private locationService: Location
+    private locationService: Location,
+    private store: Store,
   ) {
     this.navigationStart$ = this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => {
       this.fetchMovie();
     })
-
   }
 
   ngOnInit(): void {
@@ -54,6 +56,7 @@ export class CardViewComponent implements OnInit {
       const movieObservable$: Subscription = this.cardViewService.getMovie(this.id).subscribe({
         next: (response) => {
           this.movie = response;
+          this.store.dispatch(reloadComments({movieId: this.movie.id}))
         },
         error: () => {
           this.alertMessage = "Failed to fetch the movie!";

@@ -13,7 +13,7 @@ import { selectComments } from './state/comment.selectors';
 })
 export class CommentSectionComponent implements OnInit, OnDestroy {
   @Input() movie!: MovieViewInterface;
-  comments$?: Observable<CommentInterface[]> = this.store.select(selectComments);
+  comments$: Observable<CommentInterface[]> = this.store.select(selectComments);
 
   constructor(private store: Store) {}
 
