@@ -8,12 +8,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 @NgModule({
   declarations: [
     CardViewComponent,
     CommentComponent,
     CommentFormComponent,
+    CommentSectionComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,20 @@
+<section class="row mt-4">
+    <h2 class="h3 fw-bold mb-4">
+        Comments
+    </h2>
+    <app-comment-form class="mb-4" [movie]="movie" (updateComments)="onUpdateComments($event)"></app-comment-form>
+    <ng-container *ngIf="comments$ | async as comments">
+        <ng-container *ngIf="comments?.length; else noComments">
+            <div class="mb-4">
+                <app-comment *ngFor="let comment of comments?.reverse()" [comment]="comment"></app-comment>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-template #noComments>
+        <div>
+            <ngb-alert type="info" [dismissible]="false">
+                There are no comments. Be the first one!
+            </ngb-alert>
+        </div>
+    </ng-template>
+</section>

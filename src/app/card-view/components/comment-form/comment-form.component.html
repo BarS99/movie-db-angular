@@ -1,8 +1,8 @@
 <div class="form__wrapper" #formWrapper>
-    <ngb-alert *ngIf="formDisplaySuccess" type="success" [dismissible]="true">
+    <ngb-alert *ngIf="formDisplaySuccess" type="success" [dismissible]="false">
         Your comment has been posted!
     </ngb-alert>
-    <ngb-alert *ngIf="formDisplayFailure" type="error" [dismissible]="true">
+    <ngb-alert *ngIf="formDisplayFailure" type="error" [dismissible]="false">
         Failed to post the comment!
     </ngb-alert>
     <form class="form p-4 bg-light border" [formGroup]="form" (ngSubmit)="onSubmit(form.value)"
