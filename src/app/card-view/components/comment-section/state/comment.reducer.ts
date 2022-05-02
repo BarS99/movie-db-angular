@@ -40,10 +40,11 @@ export const commentReducer = createReducer(
             ...state
         }
     }),
-    on(CommentActions.postCommentSuccess, (state) => {
+    on(CommentActions.postCommentSuccess, (state, {comment}) => {
         return {
             ...state,
             postSuccess: true,
+            comments: [comment, ...state.comments],
         }
     }),
     on(CommentActions.postCommentFailure, (state) => {

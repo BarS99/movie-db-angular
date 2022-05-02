@@ -22,7 +22,7 @@ export class CommentEffects {
         mergeMap(
             ({comment}) => this.commentService$.postComment(comment)
             .pipe(
-                map(() => postCommentSuccess()),
+                map((comment) => postCommentSuccess({comment})),
                 catchError(() => of(postCommentFailure()))
             )
         )

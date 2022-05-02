@@ -18,7 +18,7 @@ export class CommentService {
     return this.http.get<CommentInterface[]>(`${commentsApi.url}/comments`, {params});
   }
 
-  postComment(data: CommentInterface): Observable<MovieViewInterface> {
-    return this.http.post<MovieViewInterface>(`${commentsApi.url}/comments`, data);
+  postComment(data: CommentInterface): Observable<CommentInterface> {
+    return this.http.post<CommentInterface>(`${commentsApi.url}/comments`, data);
   }
 }

@@ -25,7 +25,8 @@ export const postComment = createAction(
 )
 
 export const postCommentSuccess = createAction(
-    '[Card View Page -> Comments Section] Post Comment Success'
+    '[Card View Page -> Comments Section] Post Comment Success',
+    props<{ comment: CommentInterface }>()
 )
 
 export const postCommentFailure = createAction(
