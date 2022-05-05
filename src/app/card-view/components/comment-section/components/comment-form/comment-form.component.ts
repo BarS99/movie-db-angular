@@ -1,12 +1,13 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavigationStart, Router } from '@angular/router';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Actions, ofType} from '@ngrx/effects';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil} from 'rxjs';
+import { filter, Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { MovieViewInterface } from 'src/app/shared/components/card/card.model';
-import { postComment, postCommentFailure, postCommentSuccess} from '../../state/comment.actions';
+import { postComment, postCommentFailure, postCommentSuccess } from '../../state/comment.actions';
 import { selectPostFailure, selectPostSuccess } from '../../state/comment.selectors';
 import { CommentFormService } from './comment-form.service';
 
@@ -25,12 +26,25 @@ export class CommentFormComponent implements OnInit {
   formDisplayFailure$: Observable<boolean> = this.store.select(selectPostFailure);
   callbackDestroyed$: Subject<boolean> = new Subject<boolean>();
 
+  navigationStart$: Subscription;
+
   @Input() movie!: MovieViewInterface;
 
-  constructor(private library: FaIconLibrary, private formBuilder: FormBuilder, private commentFormService: CommentFormService, private store: Store, private actions$: Actions) {
+  constructor(
+    private library: FaIconLibrary,
+    private formBuilder: FormBuilder,
+    private commentFormService: CommentFormService,
+    private store: Store,
+    private actions$: Actions,
+    private router: Router
+  ) {
     this.library.addIcons(faMinus, faPlus);
 
     this.form = this.formBuilder.group(this.commentFormService.getFormConfig());
+
+    this.navigationStart$ = this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => {
+      this.form.reset();
+    })
   }
 
   ngOnInit(): void {
@@ -48,6 +62,7 @@ export class CommentFormComponent implements OnInit {
   ngOnDestroy(): void {
     this.callbackDestroyed$.next(true);
     this.callbackDestroyed$.complete();
+    this.navigationStart$.unsubscribe();
   }
 
   onSubmit(value: any) {
