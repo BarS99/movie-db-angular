@@ -2,7 +2,11 @@ import { createAction, props } from "@ngrx/store";
 import { MovieInterface } from "src/app/shared/components/card/card.model";
 import { GetMoviesInterface } from "../index.model";
 
-export const resetMovies = createAction('[Index Page] Reset Movies')
+export const resetMovies = createAction('[Index Page] Reset Movies');
+
+export const resetMoviesSuccess = createAction('[Index Page] Reset Movies Success');
+
+export const resetMoviesFailure = createAction('[Index Page] Reset Movies Failure')
 
 export const initMovies = createAction(
     '[Index Page] Init Movies'

@@ -14,6 +14,11 @@ export const indexReducer = createReducer(
     initialState,
     on(IndexActions.resetMovies, (state) => {
         return {
+            ...state
+        }
+    }),
+    on(IndexActions.resetMoviesSuccess, IndexActions.resetMoviesFailure, (state) => {
+        return {
             ...state,
             movies: [],
             nextPage: 1,
