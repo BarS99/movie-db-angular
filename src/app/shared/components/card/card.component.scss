@@ -26,6 +26,8 @@
     
         img {
             transition: transform 0.3s;
+            aspect-ratio: 500 / 750;
+            object-fit: cover;
         }
     
         &:hover img {
