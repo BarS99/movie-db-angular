@@ -57,5 +57,5 @@ export class IndexEffects {
         catchError(() => of(resetMoviesFailure()))
     ))
 
-    constructor(private actions$: Actions, private indexService: IndexService, private store: Store) { }
+    constructor(private actions$: Actions, private indexService: IndexService, private store: Store) {}
 }

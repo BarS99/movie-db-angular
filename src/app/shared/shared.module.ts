@@ -9,7 +9,7 @@ import { RatingComponent } from './components/rating/rating.component';
     RatingComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     LoaderComponent,
