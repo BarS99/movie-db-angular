@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentFormService {
+  isFormDirty$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+
   private formConfig = {
     commentName: new FormControl('', Validators.required),
     commentEmail: new FormControl('', [

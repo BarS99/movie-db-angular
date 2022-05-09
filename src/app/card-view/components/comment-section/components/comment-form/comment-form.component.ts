@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Actions, ofType } from '@ngrx/effects';
@@ -22,13 +22,15 @@ export class CommentFormComponent implements OnInit {
   formDisplayErrors: boolean = false;
   isFormCollapsed: boolean = true;
 
+  formChanges$: Subscription;
   formDisplaySuccess$: Observable<boolean> = this.store.select(selectPostSuccess);
   formDisplayFailure$: Observable<boolean> = this.store.select(selectPostFailure);
   callbackDestroyed$: Subject<boolean> = new Subject<boolean>();
 
   navigationStart$: Subscription;
+  navigationEnd$: Subscription;
 
-  @Input() movie!: MovieViewInterface;
+  @Input() movie!: MovieViewInterface; 
 
   constructor(
     private library: FaIconLibrary,
@@ -36,18 +38,29 @@ export class CommentFormComponent implements OnInit {
     private commentFormService: CommentFormService,
     private store: Store,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
   ) {
     this.library.addIcons(faMinus, faPlus);
 
     this.form = this.formBuilder.group(this.commentFormService.getFormConfig());
 
+    this.formChanges$ = this.form.valueChanges.subscribe((params) => {
+      this.commentFormService.isFormDirty$.next(this.form.dirty);
+    })
+
     this.navigationStart$ = this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => {
-      this.form.reset();
+      this.form.reset(undefined, {emitEvent: false});
+    })
+
+    this.navigationEnd$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+      this.commentFormService.isFormDirty$.next(false);
     })
   }
 
   ngOnInit(): void {
+    this.form.reset();
+    this.commentFormService.isFormDirty$.next(false)
+
     this.actions$.pipe(
       ofType(postCommentFailure, postCommentSuccess),
       takeUntil(this.callbackDestroyed$)
@@ -62,7 +75,9 @@ export class CommentFormComponent implements OnInit {
   ngOnDestroy(): void {
     this.callbackDestroyed$.next(true);
     this.callbackDestroyed$.complete();
+    this.formChanges$.unsubscribe();
     this.navigationStart$.unsubscribe();
+    this.navigationEnd$.unsubscribe();
   }
 
   onSubmit(value: any) {
@@ -79,23 +94,6 @@ export class CommentFormComponent implements OnInit {
         parentId: this.movie.id,
       }
     }))
-
-    // this.commentService.postComment({
-    //   createdAt: new Date().getTime(),
-    //   name: value.commentName,
-    //   value: value.commentValue,
-    //   parentId: this.movie.id,
-    // }).subscribe({
-    //   next: () => {
-    //     this.formDisplaySuccess = true;
-    //   },
-    //   error: () => {
-    //     this.formDisplayFailure = true;
-    //   },
-    //   complete: () => {
-
-    //   }
-    // })
   }
 
   toggleForm() {
